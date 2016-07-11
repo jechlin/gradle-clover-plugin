@@ -1,8 +1,10 @@
 package com.bmuschko.gradle.clover
 
+import groovy.util.logging.Slf4j
 import org.gradle.api.Action
 import org.gradle.api.Task
 
+@Slf4j
 class RestoreOriginalClassesAction implements Action<Task> {
     File classesDir
     File testClassesDir
@@ -12,6 +14,8 @@ class RestoreOriginalClassesAction implements Action<Task> {
 
     @Override
     void execute(Task t) {
+        log.warn("Not copying stuff back")
+        return
         def ant = new AntBuilder()
         ant.delete(includeEmptyDirs: true) {
             fileset(dir: getClassesDir().canonicalPath, includes: '**/*')
