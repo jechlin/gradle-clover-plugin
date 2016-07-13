@@ -121,7 +121,11 @@ class InstrumentCodeAction implements Action<Task> {
     }
 
     private Map getCloverSetupAttributes() {
-        def attributes = [initString: "${getBuildDir()}/${getInitString()}"]
+        def attributes = [
+            initString   : "${getBuildDir()}/${getInitString()}",
+//            flushpolicy  : "threaded",
+//            flushinterval: "1000000",
+        ]
 
         if(!getEnabled()) {
             attributes['enabled'] = false
