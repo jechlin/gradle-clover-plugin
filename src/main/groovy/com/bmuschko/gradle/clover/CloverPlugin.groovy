@@ -16,6 +16,7 @@
 package com.bmuschko.gradle.clover
 
 import com.bmuschko.gradle.clover.internal.LicenseResolverFactory
+import com.sun.org.apache.xalan.internal.xsltc.cmdline.Compile
 import groovy.util.logging.Slf4j
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -24,6 +25,7 @@ import org.gradle.api.file.FileCollection
 import org.gradle.api.internal.AsmBackedClassGenerator
 import org.gradle.api.plugins.GroovyPlugin
 import org.gradle.api.plugins.JavaPlugin
+import org.gradle.api.tasks.compile.GroovyCompile
 import org.gradle.api.tasks.testing.Test
 
 import java.lang.reflect.Constructor
@@ -95,6 +97,7 @@ class CloverPlugin implements Plugin<Project> {
         OptimizeTestSetAction optimizeTestSetAction = createOptimizeTestSetAction(cloverPluginConvention, project, test)
         test.doFirst optimizeTestSetAction // add first, gets executed second
         test.doFirst createInstrumentCodeAction(cloverPluginConvention, project, test) // add second, gets executed first
+        // test.onlyIf {false}
         test.include optimizeTestSetAction // action is also a file inclusion spec
         test.doLast createCreateSnapshotAction(cloverPluginConvention, project, test)
         test.doLast createRestoreOriginalClassesAction(cloverPluginConvention, project, test)
